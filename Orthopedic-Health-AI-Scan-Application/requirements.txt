@@ -1,0 +1,14 @@
+flask
+opencv-python
+numpy
+Pillow
+fpdf
+ultralytics
+torch
+torchvision
+werkzeug
+python-dotenv
+scikit-image
+matplotlib
+pandas
+torchaudio

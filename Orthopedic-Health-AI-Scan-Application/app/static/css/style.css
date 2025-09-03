@@ -1,0 +1,225 @@
+:root {
+    --dark-bg: #1a1a1a;
+    --darker-bg: #141414;
+    --card-bg: #242424;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --accent-color: #4f46e5;
+    --accent-hover: #4338ca;
+    --border-color: #333333;
+}
+
+body {
+    background: var(--dark-bg);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-primary);
+}
+
+.main-container {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    margin: 2rem auto;
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.main-title {
+    background: linear-gradient(45deg, #4f46e5, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.section-header {
+    color: var(--text-primary);
+    border-bottom: 3px solid var(--accent-color);
+    padding-bottom: 0.5rem;
+    margin: 2rem 0 1rem 0;
+}
+
+.form-container {
+    background: var(--darker-bg);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.form-control, .form-select {
+    background-color: var(--dark-bg);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--dark-bg);
+    border-color: var(--accent-color);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 0.25rem rgba(79, 70, 229, 0.25);
+}
+
+.card {
+    background: var(--darker-bg);
+    border: 1px solid var(--border-color);
+}
+
+.card-header {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.selection-item {
+    background: var(--darker-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.selection-item:hover {
+    border-color: var(--accent-color);
+    background: var(--card-bg);
+}
+
+.selection-item.selected {
+    border-color: var(--accent-color);
+    background: var(--card-bg);
+}
+
+.clinical-details {
+    background: var(--darker-bg);
+    color: var(--text-primary);
+}
+
+.btn-primary {
+    background: var(--accent-color);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+}
+
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+
+.progress {
+    height: 20px;
+    border-radius: 10px;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.selection-item {
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.selection-item:hover {
+    border-color: #667eea;
+    background-color: #f7fafc;
+}
+
+.selection-item.selected {
+    border-color: #667eea;
+    background-color: #edf2f7;
+}
+
+.clinical-details {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+#loadingSpinner {
+    display: none;
+}
+
+.upload-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--darker-bg);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.image-upload-container {
+    margin-bottom: 1rem;
+}
+
+.upload-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.upload-row input[type="file"] {
+    flex: 1;
+}
+
+.upload-row select {
+    flex: 1;
+}
+
+.report-download-section {
+    background: var(--darker-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--text-primary);
+}
+
+.clinical-details-section {
+    color: var(--text-primary); /* Ensure text is visible on dark background */
+    padding-left: 15px; /* Add some padding for separation */
+}
+
+.clinical-details-section h5 {
+    color: var(--accent-color); /* Highlight headings */
+    margin-top: 1rem;
+}
+
+.clinical-details-section p {
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.image-container small {
+    color: var(--text-secondary); /* Set color for "Original" and "Annotated" labels */
+}
+
+.clinical-box {
+    background: var(--darker-bg); /* Use a slightly darker background for the boxes */
+    border: 1px solid var(--border-color); /* Add a border */
+    border-radius: 8px; /* Slightly rounded corners */
+    padding: 1rem; /* Add some padding inside the box */
+    margin-bottom: 1rem; /* Add space between boxes if needed */
+}
+
+.clinical-box h5 {
+    color: var(--accent-color); /* Keep heading color consistent */
+    margin-top: 0; /* Remove top margin for headings inside the box */
+    margin-bottom: 0.5rem; /* Add some space below heading */
+}
+
+.clinical-box p {
+    color: var(--text-primary); /* Ensure text is readable */
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 0; /* Remove bottom margin for paragraphs inside the box */
+}

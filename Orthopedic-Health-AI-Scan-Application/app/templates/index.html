@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orthopedic X-ray Detection System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="main-container">
+            <div class="text-center mb-4">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" width="100">
+            </div>
+            <h1 class="main-title">Orthopedic X-ray Detection System</h1>
+            <p class="text-center text-muted mb-4" style="font-size: 1.2rem; color: var(--text-secondary) !important;">
+                Upload X-ray images, detect conditions automatically, and generate detailed medical reports.
+            </p>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <!-- Patient Information Section -->
+            <div class="form-container">
+                <h2 class="section-header">Patient Information</h2>
+                <form action="{{ url_for('save_patient_info') }}" method="POST">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Patient Name</label>
+                                <input type="text" class="form-control" id="name" name="name" 
+                                       value="{{ patient_info.get('Name', '') }}" placeholder="Enter patient name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="age" class="form-label">Age</label>
+                                <input type="number" class="form-control" id="age" name="age" 
+                                       value="{{ patient_info.get('Age', 30) }}" min="1" max="120" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="patient_id" class="form-label">Patient ID</label>
+                                <input type="text" class="form-control" id="patient_id" name="patient_id" 
+                                       value="{{ patient_info.get('Patient_ID', '') }}" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="gender" class="form-label">Gender</label>
+                                <select class="form-select" id="gender" name="gender" required>
+                                    <option value="Male" {{ 'selected' if patient_info.get('Gender') == 'Male' }}>Male</option>
+                                    <option value="Female" {{ 'selected' if patient_info.get('Gender') == 'Female' }}>Female</option>
+                                    <option value="Other" {{ 'selected' if patient_info.get('Gender') == 'Other' }}>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Patient Information</button>
+                </form>
+            </div>
+
+            <!-- Upload X-ray Images Section -->
+            <div class="upload-section">
+                <h3>Upload X-ray Images</h3>
+                <form action="{{ url_for('upload_images') }}" method="POST" enctype="multipart/form-data">
+                    <div class="image-upload-container" id="imageUploadContainer">
+                        <div class="upload-row">
+                            <input type="file" name="images" multiple accept="image/*" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload Images</button>
+                </form>
+            </div>
+
+            
+
+            <!-- Display processed images -->
+            {% if img_results %}
+                <h3>Processed X-ray Images ({{ img_results|length }} images)</h3>
+                <div class="row">
+                    {% for result in img_results %}
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>Image {{ loop.index }} - {{ result.label|title }}</strong>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="image-container">
+                                                <img src="{{ url_for('serve_image', filename=result.original_path) }}"
+                                                     class="img-fluid" alt="Original">
+                                                <div class="text-center mt-2"><small>Original</small></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="image-container">
+                                                <img src="{{ url_for('serve_image', filename=result.annotated_path) }}"
+                                                     class="img-fluid" alt="Annotated">
+                                                <div class="text-center mt-2"><small>Annotated</small></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clinical-details-section mt-3">
+                                        <div class="clinical-box mb-3">
+                                            <h5>Findings:</h5>
+                                            <p>{{ result.findings }}</p>
+                                        </div>
+                                        <div class="clinical-box">
+                                            <h5>Recommended Tests:</h5>
+                                            <p>{{ result.tests }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Download Last Generated Report Section -->
+            {% if session.get('last_report_filename') %}
+            <div class="report-download-section mt-4 p-3 border rounded">
+                <h3 class="mb-3">Download Latest Report</h3>
+                <p>Your last generated report is available for download:</p>
+                <a href="{{ url_for('download_report', filename=session['last_report_filename']) }}" class="btn btn-primary">
+                    <i class="fas fa-download"></i> Download Report
+                </a>
+            </div>
+            {% endif %}
+
+            </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
