@@ -1,14 +1,16 @@
 flask
-opencv-python
-numpy
-Pillow
-fpdf
-ultralytics
-torch
-torchvision
 werkzeug
 python-dotenv
+fpdf
+Pillow
+numpy<2
+opencv-python-headless<4.11
 scikit-image
 matplotlib
 pandas
-torchaudio
+ultralytics
+torch==2.2.0+cpu
+torchvision==0.17.0+cpu
+torchaudio==2.2.0+cpu
+--extra-index-url https://download.pytorch.org/whl/cpu
+gunicorn
